@@ -53,10 +53,10 @@ void printMancare(Mancare mancare) {
 
 Mancare MancarefromXML(XmlElement produs) {
   String tip = getAtribut(produs.attributes.toString());
-  String animalDestinat = produs.findElements('animal_destinat').elementAt(0).children.toString();
-  String marimeAnimal = produs.findElements('marime_animal').elementAt(0).children.toString();
-  String aroma = produs.findElements('aroma').elementAt(0).children.toString();
-  String rasa = produs.findElements('rasa').elementAt(0).children.toString();
+  String animalDestinat = getNumber(produs.findElements('animal_destinat').elementAt(0).children.toString());
+  String marimeAnimal = getNumber(produs.findElements('marime_animal').elementAt(0).children.toString());
+  String aroma = getNumber(produs.findElements('aroma').elementAt(0).children.toString());
+  String rasa = getNumber(produs.findElements('rasa').elementAt(0).children.toString());
   return Mancare(
     tip: tip,
     animalDestinat: animalDestinat,

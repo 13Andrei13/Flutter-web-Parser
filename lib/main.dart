@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xis/classes/petshop_class.dart';
+import 'package:flutter_xis/widgets/petshop_display.dart';
 import 'package:xml/xml.dart';
 
 void main() {
@@ -37,8 +38,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   String text1 = '';
+  late bool showJson = false;
+  late bool showXml = false;
+  late Petshop petshopMain;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +80,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       String str = String.fromCharCodes(byteList);
                       Map<String, dynamic> json = jsonDecode(str);
                       Petshop petshop = Petshop.fromJson(json);
-                      print(petshop);
+
+                      setState(() {
+                        petshopMain = petshop;
+                        showJson = true;
+                        showXml = false;
+                      });
                       // final file = File(result.files.)
                       // final file = File(result.files.first.path.toString() as List<Object>);
                       // final String fileContent = await file.readAsString();
@@ -97,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Expanded(
                     child: Container(),
-                    flex: 5,
+                    flex: 2,
                   ),
                   MaterialButton(
                     onPressed: () async {
@@ -114,6 +122,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                       String str = String.fromCharCodes(byteList);
                       Petshop petshop = PetshopfromXML(str);
+                      setState(() {
+                        petshopMain = petshop;
+                        showXml = true;
+                        showJson = false;
+                      });
                     },
                     color: Colors.blue,
                     child: const Text(
@@ -125,13 +138,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Expanded(
                     child: Container(),
-                    flex: 5,
+                    flex: 2,
                   ),
                   MaterialButton(
-                    onPressed: () {},
-                    color: Colors.blue,
+                    onPressed: () {
+                      setState(() {
+                        showXml = false;
+                        showJson = false;
+                      });
+                    },
+                    color: Colors.red,
                     child: const Text(
-                      'Upload json',
+                      'Delete data',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -140,7 +158,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Text(text1),
+            if (showXml == true)
+              PetshopWidget(
+                petshop: petshopMain,
+              ),
+            if (showJson == true)
+              PetshopWidget(
+                petshop: petshopMain,
+              ),
           ],
         ),
       ),

@@ -37,7 +37,7 @@ String getNumber(String number) {
   return number;
 }
 
-String getAtribut(String atribut){
+String getAtribut(String atribut) {
   String result = atribut.substring(atribut.indexOf('"') + 1, atribut.lastIndexOf('"'));
 
   return result;
@@ -54,10 +54,10 @@ void printAnimal(Animal animal) {
 Animal AnimalfromXML(XmlElement produs) {
   String specie = getAtribut(produs.attributes.toString());
 
-  String rasa = produs.findElements('rasa').elementAt(0).children.toString();
+  String rasa = getNumber(produs.findElements('rasa').elementAt(0).children.toString());
   int anulNasterii = int.parse(getNumber(produs.findElements('anul_nastere').elementAt(0).children.toString()));
-  String tipAnimal = produs.findElements('tip_animal').elementAt(0).children.toString();
-  String sex = produs.findElements('sex').elementAt(0).children.toString();
+  String tipAnimal = getNumber(produs.findElements('tip_animal').elementAt(0).children.toString());
+  String sex = getNumber(produs.findElements('sex').elementAt(0).children.toString());
   return Animal(
     specie: specie,
     rasa: rasa,
